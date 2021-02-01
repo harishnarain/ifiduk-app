@@ -5,7 +5,6 @@ import {
 
 import Home from './containers/Home/Home';
 import Layout from './containers/Layout/Layout';
-import AuthProvider from './store/providers/authProvider';
 
 const App = () => {
   const routes = (
@@ -24,4 +23,4 @@ const App = () => {
   );
 };
 
-export default AuthProvider(withRouter(App));
+export default withRouter(App);

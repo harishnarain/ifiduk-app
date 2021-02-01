@@ -1,11 +1,12 @@
-import React, { useContext } from 'react';
+import React from 'react';
 // import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Link from '@material-ui/core/Link';
 import Button from '@material-ui/core/Button';
 // import { AuthenticatedTemplate, UnauthenticatedTemplate, useMsal } from '@azure/msal-react';
 import { Typography } from '@material-ui/core';
-import { AuthContext } from '../../../store/context/authContext';
+
+import { signIn, signOut } from '../../../shared/auth/auth';
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -34,8 +35,6 @@ const useStyles = makeStyles(() => ({
 const NavItems = () => {
   const classes = useStyles();
 
-  const auth = useContext(AuthContext);
-
   return (
     <>
       <Typography className={classes.title}>
@@ -48,11 +47,8 @@ const NavItems = () => {
         </Link>
       </Typography>
       <div>
-        {auth.isAuthenticated ? (
-          <Button color="inherit" variant="outlined" onClick={() => auth.onSignOut()}>Sign out</Button>
-        ) : (
-          <Button color="inherit" variant="outlined" onClick={() => auth.onSignIn()}>Sign in</Button>
-        )}
+        <Button color="inherit" variant="outlined" onClick={() => signOut()}>Sign out</Button>
+        <Button color="inherit" variant="outlined" onClick={() => signIn()}>Sign in</Button>
       </div>
     </>
   );

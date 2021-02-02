@@ -1,26 +1,32 @@
 {
+    "parserOptions": {
+        "ecmaFeatures": {
+            "jsx": true
+        },
+        "ecmaVersion": 2020,
+        "sourceType": "module"
+    },
     "env": {
         "browser": true,
-        "es2021": true
+        "es6": true,
+        "commonjs": true,
+        "node": true,
+        "jest": true
     },
+    "globals": {
+        "$": true
+    },
+    "plugins": [
+        "prettier",
+        "react",
+        "react-hooks"
+    ],
     "extends": [
         "prettier",
         "prettier/react",
         "airbnb"
     ],
     "parser": "babel-eslint",
-    "parserOptions": {
-        "ecmaFeatures": {
-            "jsx": true
-        },
-        "ecmaVersion": 12,
-        "sourceType": "module"
-    },
-    "plugins": [
-        "react",
-        "prettier",
-        "react-hooks"
-    ],
     "rules": {
         "react/jsx-filename-extension": [1, {
             "extensions": [".js", ".jsx"]
@@ -28,6 +34,8 @@
         "import/imports-first": ["error", "absolute-first"],
         "import/newline-after-import": "error",
         "react/prop-types": 0,
-        "no-console": 0
+        "no-console": 0,
+        "no-alert": 0,
+        "object-curly-newline": 0
     }
 }

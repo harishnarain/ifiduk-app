@@ -3,10 +3,11 @@ import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Link from '@material-ui/core/Link';
 import Button from '@material-ui/core/Button';
-// import { AuthenticatedTemplate, UnauthenticatedTemplate, useMsal } from '@azure/msal-react';
 import { Typography } from '@material-ui/core';
+// import { AuthenticatedTemplate, UnauthenticatedTemplate, useMsal } from '@azure/msal-react';
+import { useAccount, useIsAuthenticated, useMsal } from '@azure/msal-react';
 
-import { signIn, signOut } from '../../../shared/auth/auth';
+// import { signIn, signOut, selectAccount } from '../../../shared/auth/auth';
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -34,6 +35,26 @@ const useStyles = makeStyles(() => ({
 
 const NavItems = () => {
   const classes = useStyles();
+  const isAuthenticated = useIsAuthenticated();
+  const { instance, accounts } = useMsal();
+
+  const account = useAccount(accounts[0]);
+  const loginScopes = {
+    scopes: ['https://ifiduk.onmicrosoft.com/26077f63-802a-4d8f-aa28-bb9f611989cf/demo.read'],
+  };
+
+  console.log(account);
+
+  if (account) {
+    instance
+      .acquireTokenSilent({
+        scopes: ['https://ifiduk.onmicrosoft.com/26077f63-802a-4d8f-aa28-bb9f611989cf/demo.read'],
+        account,
+      })
+      .then((res) => {
+        console.log(res);
+      });
+  }
 
   return (
     <>
@@ -47,8 +68,16 @@ const NavItems = () => {
         </Link>
       </Typography>
       <div>
-        <Button color="inherit" variant="outlined" onClick={() => signOut()}>Sign out</Button>
-        <Button color="inherit" variant="outlined" onClick={() => signIn()}>Sign in</Button>
+        {isAuthenticated && (
+          <Button color="inherit" variant="outlined" onClick={() => instance.logout()}>
+            Sign out
+          </Button>
+        )}
+        {!isAuthenticated && (
+          <Button color="inherit" variant="outlined" onClick={() => instance.loginRedirect(loginScopes)}>
+            Sign in
+          </Button>
+        )}
       </div>
     </>
   );

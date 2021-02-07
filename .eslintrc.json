@@ -31,8 +31,12 @@
         "react/jsx-filename-extension": [1, {
             "extensions": [".js", ".jsx"]
         }],
+        "indent": ["off", 2],
+        "react/jsx-indent": ["off", 2],
+        "operator-linebreak": ["off"],
         "import/imports-first": ["error", "absolute-first"],
         "import/newline-after-import": "error",
+        "no-unused-vars": ["warn"],
         "react/prop-types": 0,
         "no-console": 0,
         "no-alert": 0,

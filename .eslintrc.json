@@ -34,12 +34,15 @@
         "indent": ["off", 2],
         "react/jsx-indent": ["off", 2],
         "operator-linebreak": ["off"],
+        "implicit-arrow-linebreak": ["off"],
         "import/imports-first": ["error", "absolute-first"],
         "import/newline-after-import": "error",
+        "import/prefer-default-export": "off",
         "no-unused-vars": ["warn"],
         "react/prop-types": 0,
         "no-console": 0,
         "no-alert": 0,
-        "object-curly-newline": 0
+        "object-curly-newline": 0,
+        "no-underscore-dangle": 0
     }
 }

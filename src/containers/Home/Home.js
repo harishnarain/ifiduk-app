@@ -4,7 +4,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Jumbotron from '../../components/Jumbotron/Jumbotron';
 import AppCatalog from '../AppCatalog/AppCatalog';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   jumbotron: {
     textAlign: 'center',
   },

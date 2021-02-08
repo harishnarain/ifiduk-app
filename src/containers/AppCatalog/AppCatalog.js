@@ -33,7 +33,7 @@ const AppCatalog = () => {
 
   const productCards = products.map((product) => (
     <Grid item xs={6} sm={3} key={product._id}>
-      <ProductCard title={product.name} description={product.description} />
+      <ProductCard title={product.name} description={product.description} id={product._id} />
     </Grid>
   ));
 

@@ -17,23 +17,21 @@ const useStyles = makeStyles({
   },
 });
 
-const ProductCard = ({ title, description }) => {
+const ProductCard = ({ id, title, description }) => {
   const classes = useStyles();
 
   return (
     <Card className={classes.root}>
-      <CardActionArea>
-        <CardContent>
-          <Typography gutterBottom variant="h5" component="h2">
-            {title}
-          </Typography>
-          <Typography variant="body2" color="textSecondary" component="p">
-            {description}
-          </Typography>
-        </CardContent>
-      </CardActionArea>
+      <CardContent>
+        <Typography gutterBottom variant="h5" component="h2">
+          {title}
+        </Typography>
+        <Typography variant="body2" color="textSecondary" component="p">
+          {description}
+        </Typography>
+      </CardContent>
       <CardActions>
-        <Button size="small" color="primary">
+        <Button size="small" color="primary" href={`/subscriptions/${id}`}>
           Deploy
         </Button>
       </CardActions>

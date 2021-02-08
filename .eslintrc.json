@@ -31,6 +31,7 @@
         "react/jsx-filename-extension": [1, {
             "extensions": [".js", ".jsx"]
         }],
+        "react/jsx-closing-bracket-location": ["off"],
         "indent": ["off", 2],
         "react/jsx-indent": ["off", 2],
         "operator-linebreak": ["off"],

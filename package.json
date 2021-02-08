@@ -12,6 +12,7 @@
     "@testing-library/react": "^11.2.3",
     "@testing-library/user-event": "^12.6.3",
     "axios": "^0.21.1",
+    "clsx": "^1.1.1",
     "fontsource-roboto": "^4.0.0",
     "msal": "^1.4.5",
     "msal-react": "^0.1.0",

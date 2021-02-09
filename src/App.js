@@ -5,12 +5,12 @@ import { MsalProvider } from '@azure/msal-react';
 import Home from './containers/Home/Home';
 import Layout from './containers/Layout/Layout';
 import pca from './shared/auth/authConfig';
-import CreateSubscription from './containers/CreateSubscription/CreateSubscription';
+import Admin from './containers/Admin/Admin';
 
 const App = () => {
   const routes = (
     <Switch>
-      <Route path="/subscriptions/:productId" component={CreateSubscription} />
+      <Route path="/admin" component={Admin} />
       <Route path="/" exact component={Home} />
       <Redirect to="/" />
     </Switch>

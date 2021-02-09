@@ -31,6 +31,7 @@ const useStyles = makeStyles(() => ({
   kTitleText: {
     color: '#e9ff70',
   },
+  button: {},
 }));
 
 const NavItems = () => {
@@ -69,12 +70,12 @@ const NavItems = () => {
       </Typography>
       <div>
         {isAuthenticated && (
-          <Button color="inherit" variant="outlined" onClick={() => instance.logout()}>
+          <Button className={classes.button} variant="outlined" onClick={() => instance.logout()}>
             Sign out
           </Button>
         )}
         {!isAuthenticated && (
-          <Button color="inherit" variant="outlined" onClick={() => instance.loginRedirect(loginScopes)}>
+          <Button className={classes.button} variant="outlined" onClick={() => instance.loginRedirect(loginScopes)}>
             Sign in
           </Button>
         )}

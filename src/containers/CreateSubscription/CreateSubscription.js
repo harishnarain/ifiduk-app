@@ -27,7 +27,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const CreateSubscription = (props) => {
+const CreateSubscription = () => {
   const classes = useStyles();
   const { productId } = useParams();
   const [tenantName, setTenantName] = useState('');

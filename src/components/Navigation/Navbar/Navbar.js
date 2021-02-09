@@ -11,7 +11,7 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
   },
   appBar: {
-    background: '#03045e',
+    background: '#023e8a',
     zIndex: theme.zIndex.drawer + 1,
   },
 }));
@@ -26,7 +26,6 @@ const Navbar = () => {
           <NavItems />
         </Toolbar>
       </AppBar>
-
     </div>
   );
 };

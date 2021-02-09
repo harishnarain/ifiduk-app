@@ -8,9 +8,7 @@ import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 
 const useStyles = makeStyles({
-  root: {
-    backgroundColor: '#caf0f8',
-  },
+  root: {},
 });
 
 const Jumbotron = ({ title, subtitle }) => {

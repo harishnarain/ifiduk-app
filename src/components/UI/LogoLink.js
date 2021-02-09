@@ -24,12 +24,12 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const LogoLink = () => {
+const LogoLink = ({ link }) => {
   const classes = useStyles();
 
   return (
     <Typography className={classes.title}>
-      <Link href="/" variant="h5">
+      <Link href={link} variant="h5">
         <span className={classes.ifTitleText}>IF</span>
         <span className={classes.iTitleText}>I</span>
         <span className={classes.dTitleText}>D</span>

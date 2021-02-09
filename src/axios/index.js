@@ -1,3 +1,3 @@
 export { fetchProducts } from './products';
 
-export { createSubscription } from './subscriptions';
+export { createSubscription, getSubscriptions } from './subscriptions';

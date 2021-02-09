@@ -35,7 +35,7 @@ const SideDrawer = () => {
       <Typography className={classes.subtitle} variant="subtitle1">
         Administration
       </Typography>
-      <Divider />
+      <Divider variant="middle" />
       <List>
         <SideDrawerItems />
       </List>

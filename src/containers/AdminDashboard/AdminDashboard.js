@@ -2,7 +2,7 @@ import React from 'react';
 
 const AdminDashboard = () => (
   <div>
-    <h1>Admin Dashboard Placeholder</h1>
+    <h1>Admin Dashboard</h1>
   </div>
 );
 

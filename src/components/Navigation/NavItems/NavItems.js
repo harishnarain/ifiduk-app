@@ -9,7 +9,7 @@ import { useAccount, useIsAuthenticated, useMsal } from '@azure/msal-react';
 
 // import { signIn, signOut, selectAccount } from '../../../shared/auth/auth';
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles((theme) => ({
   root: {
     // flexGrow: 1,
   },
@@ -31,7 +31,9 @@ const useStyles = makeStyles(() => ({
   kTitleText: {
     color: '#e9ff70',
   },
-  button: {},
+  button: {
+    marginLeft: theme.spacing(1),
+  },
 }));
 
 const NavItems = () => {
@@ -69,6 +71,11 @@ const NavItems = () => {
         </Link>
       </Typography>
       <div>
+        <Link href="/admin">
+          <Button className={classes.button} variant="outlined">
+            Admin Console
+          </Button>
+        </Link>
         {isAuthenticated && (
           <Button className={classes.button} variant="outlined" onClick={() => instance.logout()}>
             Sign out

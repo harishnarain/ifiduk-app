@@ -1,13 +1,9 @@
 import React from 'react';
-// import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Link from '@material-ui/core/Link';
 import Button from '@material-ui/core/Button';
 import { Typography } from '@material-ui/core';
-// import { AuthenticatedTemplate, UnauthenticatedTemplate, useMsal } from '@azure/msal-react';
-import { useAccount, useIsAuthenticated, useMsal } from '@azure/msal-react';
-
-// import { signIn, signOut, selectAccount } from '../../../shared/auth/auth';
+import { useIsAuthenticated, useMsal } from '@azure/msal-react';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -41,22 +37,31 @@ const NavItems = () => {
   const isAuthenticated = useIsAuthenticated();
   const { instance, accounts } = useMsal();
 
-  const account = useAccount(accounts[0]);
   const loginScopes = {
     scopes: ['https://ifiduk.onmicrosoft.com/26077f63-802a-4d8f-aa28-bb9f611989cf/demo.read'],
   };
 
-  console.log(account);
+  if (accounts.length > 0) {
+    console.log(accounts);
+    const userName = accounts[0].username;
+    const currentAccount = instance.getAccountByUsername(userName);
+    const silentRequest = {
+      ...loginScopes,
+      account: currentAccount,
+      forceRefresh: false,
+    };
 
-  if (account) {
+    const request = {
+      ...loginScopes,
+      loginHint: currentAccount.username,
+    };
+
     instance
-      .acquireTokenSilent({
-        scopes: ['https://ifiduk.onmicrosoft.com/26077f63-802a-4d8f-aa28-bb9f611989cf/demo.read'],
-        account,
-      })
+      .acquireTokenSilent(silentRequest)
       .then((res) => {
         console.log(res);
-      });
+      })
+      .catch(() => useMsal.acquireTokenRedirect(request));
   }
 
   return (

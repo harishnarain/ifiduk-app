@@ -3,6 +3,7 @@ import { createMuiTheme } from '@material-ui/core/styles';
 import { ThemeProvider } from '@material-ui/styles';
 
 import Navbar from '../../components/Navigation/Navbar/Navbar';
+import Aux from '../../hoc/Aux/Aux';
 
 const theme = createMuiTheme({
   palette: {
@@ -17,12 +18,12 @@ const theme = createMuiTheme({
 });
 
 const Layout = ({ children }) => (
-  <>
+  <Aux>
     <ThemeProvider theme={theme}>
       <Navbar />
       <main>{children}</main>
     </ThemeProvider>
-  </>
+  </Aux>
 );
 
 export default Layout;

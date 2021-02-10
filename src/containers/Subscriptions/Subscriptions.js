@@ -12,11 +12,13 @@ import Checkbox from '@material-ui/core/Checkbox';
 
 import Subscription from '../../components/Subscriptions/Subscription';
 import { useDebounceFunction } from '../../shared/useDebounceFunction';
+import useDebounce from '../../shared/useDebounce';
 import EnhancedTableHead from '../../components/Subscriptions/EnhancedTableHead';
 import { getComparator } from '../../components/Subscriptions/comparators';
 import { stableSort } from '../../components/Subscriptions/sort';
 import EnhancedTableToolbar from '../../components/Subscriptions/EnhancedTableToolbar';
 import DeleteSubscription from '../../components/Subscriptions/DeleteSubscription';
+import { fetchSubscriptions } from '../../axios';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -42,17 +44,6 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const sampleRows = [
-  { id: 1, name: 'wordpress-test', status: 'Deleting' },
-  { id: 2, name: 'rocketchat-test', status: 'Pending' },
-  { id: 3, name: 'ghostblog-test', status: 'Pending' },
-  { id: 4, name: 'lampstack-test', status: 'Deployed' },
-  { id: 5, name: 'joomla-test', status: 'Deployed' },
-  { id: 6, name: 'joomla-test', status: 'Deployed' },
-  { id: 7, name: 'joomla-test', status: 'Deployed' },
-  { id: 8, name: 'joomla-test', status: 'Deployed' },
-];
-
 const Subscriptions = () => {
   const classes = useStyles();
   const [order, setOrder] = React.useState('asc');
@@ -62,15 +53,20 @@ const Subscriptions = () => {
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
   const [query, setQuery] = useState('');
   const [deleteSubDialog, setDeleteSubDialog] = useState(null);
+  const [subscriptions, setSubscriptions] = useState([]);
 
-  // prettier-ignore
-  const results = sampleRows.filter(
-    (row) => row.name.toLowerCase().startsWith(query.toLowerCase()),
-  );
+  const debouncedQuery = useDebounce(query, 500);
+
+  useEffect(() => {
+    fetchSubscriptions(debouncedQuery).then((data) => {
+      setSubscriptions(data);
+    });
+  }, [debouncedQuery]);
 
   const debouncedRefreshSubs = useDebounceFunction(() => {
-    // refresh subs code placeholder
-    setQuery('');
+    fetchSubscriptions('').then((data) => {
+      setSubscriptions(data);
+    });
   }, 500);
 
   const deleteSubHandler = (subs) => {
@@ -89,7 +85,7 @@ const Subscriptions = () => {
 
   const selectAllClickHandler = (event) => {
     if (event.target.checked) {
-      const newSelecteds = sampleRows.map((sub) => sub);
+      const newSelecteds = subscriptions.map((sub) => sub);
       setSelected(newSelecteds);
       return;
     }
@@ -128,11 +124,11 @@ const Subscriptions = () => {
 
   const isSelected = (id) => selected.indexOf(id) !== -1;
 
-  const emptyRows = rowsPerPage - Math.min(rowsPerPage, sampleRows.length - page * rowsPerPage);
+  const emptyRows = rowsPerPage - Math.min(rowsPerPage, subscriptions.length - page * rowsPerPage);
 
   const subs = (
     <TableBody>
-      {stableSort(results, getComparator(order, orderBy))
+      {stableSort(subscriptions, getComparator(order, orderBy))
         .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
         .map((sub, index) => {
           const isItemSelected = isSelected(sub);
@@ -145,7 +141,7 @@ const Subscriptions = () => {
               role="checkbox"
               aria-checked={isItemSelected}
               tabIndex={-1}
-              key={sub.id}
+              key={sub._id}
               selected={isItemSelected}>
               <TableCell padding="checkbox">
                 <Checkbox
@@ -156,7 +152,7 @@ const Subscriptions = () => {
               </TableCell>
               {/* prettier-ignore */}
               <Subscription
-                id={sub.id}
+                id={sub._id}
                 labelId={labelId}
                 name={sub.name}
                 status={sub.status}
@@ -187,10 +183,6 @@ const Subscriptions = () => {
     );
   };
 
-  const addHandler = () => {
-    console.log('Add Handler Triggered...');
-  };
-
   return (
     <div>
       <Container className={classes.container}>
@@ -217,7 +209,7 @@ const Subscriptions = () => {
               orderBy={orderBy}
               onSelectAllClick={selectAllClickHandler}
               onRequestSort={requestSortHandler}
-              rowCount={sampleRows.length}
+              rowCount={subscriptions.length}
             />
             {subs}
           </Table>
@@ -225,7 +217,7 @@ const Subscriptions = () => {
         <TablePagination
           rowsPerPageOptions={[5, 10, 25]}
           component="div"
-          count={sampleRows.length}
+          count={subscriptions.length}
           rowsPerPage={rowsPerPage}
           page={page}
           onChangePage={changePageHandler}

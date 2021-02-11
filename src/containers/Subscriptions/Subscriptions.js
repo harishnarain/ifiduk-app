@@ -18,7 +18,7 @@ import { getComparator } from '../../components/Subscriptions/comparators';
 import { stableSort } from '../../components/Subscriptions/sort';
 import EnhancedTableToolbar from '../../components/Subscriptions/EnhancedTableToolbar';
 import DeleteSubscription from '../../components/Subscriptions/DeleteSubscription';
-import { fetchSubscriptions } from '../../axios';
+import { fetchSubscriptions, deleteSubscription } from '../../axios';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -71,9 +71,8 @@ const Subscriptions = () => {
 
   const deleteSubHandler = (subs) => {
     setDeleteSubDialog(null);
-    // insert delete sub code here
-    console.log('Deleting...');
-    console.log(subs);
+    // console.log(subs);
+    deleteSubscription(subs);
     setSelected([]);
   };
 

@@ -31,7 +31,7 @@ export default function DeleteSubscription({ subs, open, onCancel, onDelete }) {
 
   if (subs.length !== 0) {
     subscriptionEls = subs.map((sub) => (
-      <ListItem key={sub.id}>
+      <ListItem key={sub._id}>
         <ListItemText primary={<Typography variant="body2">{sub.name}</Typography>} />
       </ListItem>
     ));

@@ -76,11 +76,13 @@ const NavItems = () => {
         </Link>
       </Typography>
       <div>
-        <Link href="/admin">
-          <Button className={classes.button} variant="outlined">
-            Admin Console
-          </Button>
-        </Link>
+        {isAuthenticated && (
+          <Link href="/admin">
+            <Button className={classes.button} variant="outlined">
+              Admin Console
+            </Button>
+          </Link>
+        )}
         {isAuthenticated && (
           <Button className={classes.button} variant="outlined" onClick={() => instance.logout()}>
             Sign out

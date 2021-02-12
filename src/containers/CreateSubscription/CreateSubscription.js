@@ -40,7 +40,8 @@ const CreateSubscription = () => {
     setTenantName(value);
   };
 
-  const onSubmitHandler = () => {
+  const onSubmitHandler = (event) => {
+    event.preventDefault();
     const requestBody = {
       productId,
       name: tenantName,
@@ -71,7 +72,7 @@ const CreateSubscription = () => {
   };
 
   return (
-    <form className={classes.root} autoComplete="off" onSubmit={() => onSubmitHandler()}>
+    <form className={classes.root} autoComplete="off" onSubmit={(event) => onSubmitHandler(event)}>
       <Container>
         <Grid
           container

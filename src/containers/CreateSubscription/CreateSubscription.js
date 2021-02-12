@@ -8,8 +8,10 @@ import clsx from 'clsx';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
+import { useMsal } from '@azure/msal-react';
 
 import { createSubscription } from '../../axios/index';
+import authScopes from '../../shared/auth/authScopes';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -29,20 +31,43 @@ const useStyles = makeStyles((theme) => ({
 
 const CreateSubscription = () => {
   const classes = useStyles();
+  const { instance, accounts } = useMsal();
   const { productId } = useParams();
   const [tenantName, setTenantName] = useState('');
+  const loginScopes = { ...authScopes };
 
   const tenantNameInputHandler = (value) => {
     setTenantName(value);
   };
 
   const onSubmitHandler = () => {
-    const request = {
+    const requestBody = {
       productId,
       name: tenantName,
     };
 
-    createSubscription(request);
+    if (accounts.length > 0) {
+      const userName = accounts[0].username;
+      const currentAccount = instance.getAccountByUsername(userName);
+      const silentRequest = {
+        ...loginScopes,
+        account: currentAccount,
+        forceRefresh: false,
+      };
+
+      const request = {
+        ...loginScopes,
+        loginHint: currentAccount.username,
+      };
+
+      instance
+        .acquireTokenSilent(silentRequest)
+        .then((res) => {
+          console.log(res);
+          createSubscription(requestBody, res.accessToken);
+        })
+        .catch(() => useMsal.acquireTokenRedirect(request));
+    }
   };
 
   return (

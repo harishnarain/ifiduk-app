@@ -9,6 +9,7 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
 import Checkbox from '@material-ui/core/Checkbox';
+import { useMsal } from '@azure/msal-react';
 
 import Subscription from '../../components/Subscriptions/Subscription';
 import { useDebounceFunction } from '../../shared/useDebounceFunction';
@@ -19,6 +20,7 @@ import { stableSort } from '../../components/Subscriptions/sort';
 import EnhancedTableToolbar from '../../components/Subscriptions/EnhancedTableToolbar';
 import DeleteSubscription from '../../components/Subscriptions/DeleteSubscription';
 import { fetchSubscriptions, deleteSubscription } from '../../axios';
+import authScopes from '../../shared/auth/authScopes';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -46,6 +48,7 @@ const useStyles = makeStyles((theme) => ({
 
 const Subscriptions = () => {
   const classes = useStyles();
+  const { instance, accounts } = useMsal();
   const [order, setOrder] = React.useState('asc');
   const [orderBy, setOrderBy] = React.useState('name');
   const [selected, setSelected] = React.useState([]);
@@ -57,16 +60,60 @@ const Subscriptions = () => {
 
   const debouncedQuery = useDebounce(query, 500);
 
+  const loginScopes = { ...authScopes };
+
   useEffect(() => {
-    fetchSubscriptions(debouncedQuery).then((data) => {
-      setSubscriptions(data);
-    });
+    if (accounts.length > 0) {
+      const userName = accounts[0].username;
+      const currentAccount = instance.getAccountByUsername(userName);
+      const silentRequest = {
+        ...loginScopes,
+        account: currentAccount,
+        forceRefresh: false,
+      };
+
+      const request = {
+        ...loginScopes,
+        loginHint: currentAccount.username,
+      };
+
+      instance
+        .acquireTokenSilent(silentRequest)
+        .then((res) => {
+          console.log(res);
+          fetchSubscriptions(debouncedQuery, res.accessToken).then((data) => {
+            setSubscriptions(data);
+          });
+        })
+        .catch(() => useMsal.acquireTokenRedirect(request));
+    }
   }, [debouncedQuery]);
 
   const debouncedRefreshSubs = useDebounceFunction(() => {
-    fetchSubscriptions('').then((data) => {
-      setSubscriptions(data);
-    });
+    if (accounts.length > 0) {
+      const userName = accounts[0].username;
+      const currentAccount = instance.getAccountByUsername(userName);
+      const silentRequest = {
+        ...loginScopes,
+        account: currentAccount,
+        forceRefresh: false,
+      };
+
+      const request = {
+        ...loginScopes,
+        loginHint: currentAccount.username,
+      };
+
+      instance
+        .acquireTokenSilent(silentRequest)
+        .then((res) => {
+          console.log(res);
+          fetchSubscriptions('', res.accessToken).then((data) => {
+            setSubscriptions(data);
+          });
+        })
+        .catch(() => useMsal.acquireTokenRedirect(request));
+    }
   }, 500);
 
   const deleteSubHandler = (subs) => {

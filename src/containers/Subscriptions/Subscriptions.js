@@ -118,8 +118,28 @@ const Subscriptions = () => {
 
   const deleteSubHandler = (subs) => {
     setDeleteSubDialog(null);
-    // console.log(subs);
-    deleteSubscription(subs);
+    if (accounts.length > 0) {
+      const userName = accounts[0].username;
+      const currentAccount = instance.getAccountByUsername(userName);
+      const silentRequest = {
+        ...loginScopes,
+        account: currentAccount,
+        forceRefresh: false,
+      };
+
+      const request = {
+        ...loginScopes,
+        loginHint: currentAccount.username,
+      };
+
+      instance
+        .acquireTokenSilent(silentRequest)
+        .then((res) => {
+          console.log(res);
+          deleteSubscription(subs, res.accessToken);
+        })
+        .catch(() => useMsal.acquireTokenRedirect(request));
+    }
     setSelected([]);
   };
 

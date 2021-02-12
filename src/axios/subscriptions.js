@@ -36,11 +36,15 @@ export const fetchSubscriptions = async (query, token) => {
     .catch((err) => err);
 };
 
-export const deleteSubscription = async (subs) => {
+export const deleteSubscription = async (subs, token) => {
   try {
     // eslint-disable-next-line
     for (const sub of subs) {
-      axios.delete(`http://localhost:7071/api/subscriptions/${sub._id}`);
+      axios.delete(`http://localhost:7071/api/subscriptions/${sub._id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
     }
   } catch (err) {
     return err;

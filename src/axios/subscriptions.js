@@ -28,10 +28,10 @@ export const fetchSubscriptions = async (query, token) => {
   console.log(`[Token]: ${token}`);
 
   return axios
-    .get(`https://ifiduk-api.azurewebsites.net/api/subscriptions${queryParams}`, {
+    .get(`${process.env.REACT_APP_FUNC_URL}/subscriptions${queryParams}`, {
       headers: {
         Authorization: `Bearer ${token}`,
-        'x-functions-key': 'z1GFRdckBpDQadYloBrJZFKxf3spaRfB0HqcfOqj1Mk74FvZ0MxZmg==',
+        'x-functions-key': process.env.REACT_APP_FUNC_GET_SUB_KEY,
       },
     })
     .then((res) => res.data)
@@ -42,10 +42,10 @@ export const deleteSubscription = async (subs, token) => {
   try {
     // eslint-disable-next-line
     for (const sub of subs) {
-      axios.delete(`https://ifiduk-api.azurewebsites.net/api/subscriptions/${sub._id}`, {
+      axios.delete(`${process.env.REACT_APP_FUNC_URL}/subscriptions/${sub._id}`, {
         headers: {
           Authorization: `Bearer ${token}`,
-          'x-functions-key': 'a43RsAf6ILP77oxYNnJsusWMgUNJ0UiwGFpG5SYTpbnuNbGqoCQ2Jw==',
+          'x-functions-key': process.env.REACT_APP_FUNC_DEL_SUB_KEY,
         },
       });
     }

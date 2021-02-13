@@ -13,7 +13,7 @@ const configuration: Configuration = {
     knownAuthorities: [b2cPolicies.authorityDomain],
     // You must register this URI on Azure Portal/App Registration.
     // Defaults to "window.location.href".
-    redirectUri: 'https://ifiduk-app.azurewebsites.net',
+    redirectUri: process.env.REACT_APP_REDIRECT_URI,
   },
   cache: {
     // Configures cache location. "sessionStorage" is more secure,

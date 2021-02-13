@@ -8,9 +8,9 @@ export const fetchProducts = async (query) => {
   }
 
   return axios
-    .get(`https://ifiduk-api.azurewebsites.net/api/products${queryParams}`, {
+    .get(`${process.env.REACT_APP_FUNC_URL}/products${queryParams}`, {
       headers: {
-        'x-functions-key': '1sFv9gdJ6sisbjBvzPo8w7ge7ZbJvqJLMmi65qBLFXWpREawKaOxkw==',
+        'x-functions-key': process.env.REACT_APP_FUNC_GET_PRODUCTS_KEY,
       },
     })
     .then((res) => res.data)

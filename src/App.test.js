@@ -1,6 +1,8 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 
+// Mock test
+
 test('renders learn react link', () => {
   const MockTest = () => (
     <div>

@@ -3,7 +3,7 @@ import { createMuiTheme } from '@material-ui/core/styles';
 import { ThemeProvider } from '@material-ui/styles';
 
 import Navbar from '../../components/Navigation/Navbar/Navbar';
-import Aux from '../../hoc/Aux/Aux';
+import Aux from '../../hoc/Auxilary/Auxilary';
 
 const theme = createMuiTheme({
   palette: {

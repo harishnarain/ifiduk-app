@@ -14,7 +14,7 @@ import { InteractionType } from '@azure/msal-browser';
 import { createSubscription } from '../../axios/index';
 import authScopes from '../../shared/auth/authScopes';
 import Spinner from '../../components/UI/Spinner';
-import Aux from '../../hoc/Aux/Aux';
+import Aux from '../../hoc/Auxilary/Auxilary';
 
 const useStyles = makeStyles((theme) => ({
   root: {

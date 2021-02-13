@@ -13,7 +13,7 @@ import CreateSubscription from '../CreateSubscription/CreateSubscription';
 import AdminDashboard from '../AdminDashboard/AdminDashboard';
 import authScopes from '../../shared/auth/authScopes';
 import Spinner from '../../components/UI/Spinner';
-import Aux from '../../hoc/Aux/Aux';
+import Aux from '../../hoc/Auxilary/Auxilary';
 
 const useStyles = makeStyles(() => ({
   root: {

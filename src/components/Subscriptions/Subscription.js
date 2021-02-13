@@ -1,7 +1,7 @@
 import React from 'react';
 import TableCell from '@material-ui/core/TableCell';
 
-import Aux from '../../hoc/Aux/Aux';
+import Aux from '../../hoc/Auxilary/Auxilary';
 
 const subscription = ({ labelId, name, status }) => (
   <Aux>

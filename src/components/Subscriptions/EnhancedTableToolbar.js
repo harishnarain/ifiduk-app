@@ -14,7 +14,7 @@ import AddIcon from '@material-ui/icons/Add';
 import RefreshIcon from '@material-ui/icons/Refresh';
 import Link from '@material-ui/core/Link';
 
-import Aux from '../../hoc/Aux/Aux';
+import Aux from '../../hoc/Auxilary/Auxilary';
 
 const useToolbarStyles = makeStyles((theme) => ({
   root: {

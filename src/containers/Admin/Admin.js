@@ -69,7 +69,7 @@ const Admin = () => {
         <CssBaseline />
         <SideDrawer />
         <Container>
-          <Suspense fallback={<p>Loading...</p>}>{adminRoutes}</Suspense>
+          <Suspense fallback={<Spinner />}>{adminRoutes}</Suspense>
         </Container>
       </div>
       </MsalAuthenticationTemplate>

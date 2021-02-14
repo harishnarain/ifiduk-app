@@ -4,6 +4,8 @@ import Container from '@material-ui/core/Container';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
+import Box from '@material-ui/core/Box';
+import Paper from '@material-ui/core/Paper';
 
 import ProductCard from '../../components/ProductCard/ProductCard';
 import { fetchProducts } from '../../axios';
@@ -11,10 +13,20 @@ import useDebounce from '../../shared/useDebounce';
 
 const useStyles = makeStyles((theme) => ({
   container: {
-    margin: theme.spacing(3),
+    width: '100%',
+    padding: theme.spacing(4),
+  },
+  box: {
+    display: 'flex',
+    justifyContent: 'center',
+  },
+  paper: {
+    width: '85vw',
+    padding: theme.spacing(3),
   },
   search: {
-    width: '100%',
+    width: '75%',
+    margin: theme.spacing(3),
   },
 }));
 
@@ -38,25 +50,23 @@ const AppCatalog = () => {
   ));
 
   return (
-    <div>
-      <Container className={classes.container}>
-        <Typography variant="h6" gutterBottom>
-          App Catalog
-        </Typography>
-      </Container>
-      <Container className={classes.container}>
-        <TextField
-          label="Search for apps..."
-          variant="outlined"
-          className={classes.search}
-          onChange={(event) => setQuery(event.target.value)}
-        />
-      </Container>
-      <Container className={classes.container}>
-        <Grid container spacing={3}>
-          {productCards}
-        </Grid>
-      </Container>
+    <div className={classes.container}>
+      <Box className={classes.box}>
+        <Paper className={classes.paper}>
+          <Typography variant="h6" gutterBottom>
+            App Catalog
+          </Typography>
+          <TextField
+            label="Search for apps..."
+            variant="outlined"
+            className={classes.search}
+            onChange={(event) => setQuery(event.target.value)}
+          />
+          <Grid container spacing={3}>
+            {productCards}
+          </Grid>
+        </Paper>
+      </Box>
     </div>
   );
 };

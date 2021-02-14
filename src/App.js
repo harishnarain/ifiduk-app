@@ -6,6 +6,7 @@ import Home from './containers/Home/Home';
 import Layout from './containers/Layout/Layout';
 import pca from './shared/auth/authConfig';
 import Admin from './containers/Admin/Admin';
+import Spinner from './components/UI/Spinner';
 
 const App = () => {
   const routes = (
@@ -19,7 +20,7 @@ const App = () => {
   return (
     <MsalProvider instance={pca}>
       <Layout>
-        <Suspense fallback={<p>Loading...</p>}>{routes}</Suspense>
+        <Suspense fallback={<Spinner />}>{routes}</Suspense>
       </Layout>
     </MsalProvider>
   );

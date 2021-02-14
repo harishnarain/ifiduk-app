@@ -72,7 +72,6 @@ const NavItems = () => {
 
   useEffect(() => {
     if (accounts.length > 0) {
-      console.log(accounts);
       const userName = accounts[0].username;
       const currentAccount = instance.getAccountByUsername(userName);
       const silentRequest = {
@@ -89,8 +88,6 @@ const NavItems = () => {
       instance
         .acquireTokenSilent(silentRequest)
         .then((res) => {
-          console.log(`[name]: ${res.account.idTokenClaims.given_name} ${res.account.idTokenClaims.family_name}`);
-          console.log(`[email]: ${res.account.idTokenClaims.emails[0]}`);
           setUserProfile({
             ...userProfile,
             name: `${res.account.idTokenClaims.given_name} ${res.account.idTokenClaims.family_name}`,
@@ -102,7 +99,6 @@ const NavItems = () => {
   }, [anchorEl]);
 
   if (accounts.length > 0) {
-    console.log(accounts);
     const userName = accounts[0].username;
     const currentAccount = instance.getAccountByUsername(userName);
     const silentRequest = {
@@ -118,9 +114,7 @@ const NavItems = () => {
 
     instance
       .acquireTokenSilent(silentRequest)
-      .then((res) => {
-        console.log(res);
-      })
+      .then((res) => res)
       .catch(() => useMsal.acquireTokenRedirect(request));
   }
 

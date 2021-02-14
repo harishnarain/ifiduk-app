@@ -25,8 +25,6 @@ export const fetchSubscriptions = async (query, token) => {
     queryParams = `?name=${query}`;
   }
 
-  console.log(`[Token]: ${token}`);
-
   return axios
     .get(`${process.env.REACT_APP_FUNC_URL}/subscriptions${queryParams}`, {
       headers: {

@@ -82,7 +82,6 @@ const Subscriptions = () => {
       instance
         .acquireTokenSilent(silentRequest)
         .then((res) => {
-          console.log(res);
           fetchSubscriptions(debouncedQuery, res.accessToken).then((data) => {
             setSubscriptions(data);
             setLoading(false);
@@ -111,7 +110,6 @@ const Subscriptions = () => {
       instance
         .acquireTokenSilent(silentRequest)
         .then((res) => {
-          console.log(res);
           fetchSubscriptions('', res.accessToken).then((data) => {
             setSubscriptions(data);
             setLoading(false);
@@ -140,7 +138,6 @@ const Subscriptions = () => {
       instance
         .acquireTokenSilent(silentRequest)
         .then((res) => {
-          console.log(res);
           deleteSubscription(subs, res.accessToken);
         })
         .catch(() => useMsal.acquireTokenRedirect(request));

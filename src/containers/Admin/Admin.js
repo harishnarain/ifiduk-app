@@ -42,9 +42,7 @@ const Admin = () => {
 
     instance
       .acquireTokenSilent(silentRequest)
-      .then((res) => {
-        console.log(res);
-      })
+      .then((res) => res)
       .catch(() => useMsal.acquireTokenRedirect(request));
   }
 

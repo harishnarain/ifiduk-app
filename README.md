@@ -78,9 +78,9 @@ Pull requests are welcome
 
 **Home Page**
 
-![Screenshot1](https://github.com/harishnarain/ifiduk-app/blob/main/Screenshot1.PNG?raw=true)
-![Screenshot2](https://github.com/harishnarain/ifiduk-app/blob/main/Screenshot2.PNG?raw=true)
-![Screenshot3](https://github.com/harishnarain/ifiduk-app/blob/main/Screenshot2.PNG?raw=true)
+![Screenshot1](https://github.com/harishnarain/ifiduk-app/blob/main/Screenshot1.png?raw=true)
+![Screenshot2](https://github.com/harishnarain/ifiduk-app/blob/main/Screenshot2.png?raw=true)
+![Screenshot3](https://github.com/harishnarain/ifiduk-app/blob/main/Screenshot2.png?raw=true)
 
 ## Questions
 

@@ -208,7 +208,7 @@ const Subscriptions = () => {
           return (
             <TableRow
               hover
-              onClick={(event) => clickHandler(event, sub)}
+              // onClick={(event) => clickHandler(event, sub)}
               role="checkbox"
               aria-checked={isItemSelected}
               tabIndex={-1}

@@ -16,9 +16,16 @@ const headCells = [
     label: 'Name',
   },
   {
+    id: 'url',
+    numeric: false,
+    align: 'left',
+    disablePadding: true,
+    label: 'URL',
+  },
+  {
     id: 'status',
     numeric: false,
-    align: 'center',
+    align: 'left',
     disablePadding: true,
     label: 'Status',
   },

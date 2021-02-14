@@ -1,70 +1,89 @@
-# Getting Started with Create React App
+# IFIDUK - The marketplace for web based apps
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+[![MIT license](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 
-## Available Scripts
+IFIDUK is an app suite for running your own SaaS marketplace. You assemble your app and deploy it on IFIDUK where your users can visit and deploy their own instances.
 
-In the project directory, you can run:
+The suite consists of the following:
+- A ReactJS front end that uses Azure Active Directory B2C for authentication and authorization - https://github.com/harishnarain/ifiduk-app
+- An Azure Functions App that handles all CRUD operations and a MongoDB seeder. The functions app will also require Azure Service Bus for sending deployment messages - https://github.com/harishnarain/ifiduk-deployment-function
+- The IFIDUK Server Agent that deploys containers on Docker - https://github.com/harishnarain/ifiduk-agent
+- IFIDUK Terraform code to deploy services on Azure (Work in progress) - https://github.com/harishnarain/ifiduk-terraform
 
-### `npm start`
+## Table of Contents
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+- [IFIDUK - The marketplace for web based apps](#ifiduk---the-marketplace-for-web-based-apps)
+  - [Table of Contents](#table-of-contents)
+  - [Installation](#installation)
+  - [Usage](#usage)
+  - [Features](#features)
+  - [License](#license)
+  - [Contributing](#contributing)
+  - [Screenshots](#screenshots)
+  - [Questions](#questions)
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+## Installation
 
-### `npm test`
+This is the installation instructions for the ReactJS front end app.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+1. Clone this GitHub repository
 
-### `npm run build`
+   ```
+   git@github.com:harishnarain/ifiduk-app.git
+   ```
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+2. Install all dependent npm packages
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+   ```
+   npm install --save
+   ```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+3. Run the development server
 
-### `npm run eject`
+   ```
+   npm start
+   ```
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+4. If deploying to a hosting platform follow the instructions of that platform for deploying React apps
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## Usage
+## Deploy apps
+1. Search for apps in the marketplace
+2. Click deploy on the product card
+3. Enter a tenant name and click deploy
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+## Admin
+1. Sign in
+2. Click on the Admin Console from the Navbar
+3. Click Subscriptions to manage subscriptions
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+## Features
 
-## Learn More
+- Azure Active Directory B2C
+- Material UI for ReactJS
+- Axios for sending requests to Azure Functions deployment API
+- Data rendered via APIs from MongoDB
+- Data validation for tenant name
+- Refresh button and search forms are debounced
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## License
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+This project uses the MIT license
 
-### Code Splitting
+## Contributing
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+Pull requests are welcome
 
-### Analyzing the Bundle Size
+## Screenshots
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+**Home Page**
 
-### Making a Progressive Web App
+![Screenshot1](https://github.com/harishnarain/ifiduk-app/blob/main/Screenshot1.PNG?raw=true)
+![Screenshot2](https://github.com/harishnarain/ifiduk-app/blob/main/Screenshot2.PNG?raw=true)
+![Screenshot3](https://github.com/harishnarain/ifiduk-app/blob/main/Screenshot2.PNG?raw=true)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+## Questions
 
-### Advanced Configuration
+Checkout my GitHub [profile](https://github.com/harishnarain)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Please feel free to email at: <Harish.Narain@microsoft.com>

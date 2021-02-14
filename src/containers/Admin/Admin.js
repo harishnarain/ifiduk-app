@@ -14,6 +14,7 @@ import AdminDashboard from '../AdminDashboard/AdminDashboard';
 import authScopes from '../../shared/auth/authScopes';
 import Spinner from '../../components/UI/Spinner';
 import Aux from '../../hoc/Auxilary/Auxilary';
+import SubscriptionComplete from '../CreateSubscription/SubscriptionComplete';
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -50,6 +51,7 @@ const Admin = () => {
     <Switch>
       <Route path="/admin/subscriptions/:productId" exact component={CreateSubscription} />
       <Route path="/admin/subscriptions" component={Subscriptions} />
+      <Route path="/admin/subscriptioncomplete" exact component={SubscriptionComplete} />
       <Route path="/admin/appcatalog" exact component={AppCatalog} />
       <Route path="/admin" exact component={AdminDashboard} />
       <Redirect to="/admin" />

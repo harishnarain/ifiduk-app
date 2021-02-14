@@ -32,7 +32,7 @@ const useStyles = makeStyles((theme) => ({
     width: '35ch',
   },
   container: {
-    width: '100%',
+    // width: '100%',
     padding: theme.spacing(4),
   },
   box: {
@@ -44,7 +44,7 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(3),
   },
   formGrid: {
-    minHeight: '100vh',
+    // minHeight: '100vh',
   },
 }));
 
@@ -119,7 +119,7 @@ const CreateSubscription = ({ history }) => {
           createSubscription(requestBody, res.accessToken);
         })
         .then(() => {
-          history.push('/admin/subscriptions');
+          history.push(`/admin/subscriptioncomplete?title=${title}`);
           setLoading(false);
         })
         .catch(() => useMsal.acquireTokenRedirect(request));
@@ -139,9 +139,7 @@ const CreateSubscription = ({ history }) => {
         <Container className={classes.container}>
           <Box className={classes.box}>
             <Paper className={classes.paper}>
-              <Typography variant="h6" gutterBottom>
-                {`Choose a domain name for ${title}`}
-              </Typography>
+
           <Grid
             container
             spacing={0}
@@ -149,6 +147,9 @@ const CreateSubscription = ({ history }) => {
             alignItems="center"
             justify="center"
             className={classes.formGrid}>
+              <Typography variant="h6" gutterBottom>
+                {`Choose a domain name for ${title}`}
+              </Typography>
             <Grid item xs={3}>
               <FormControl className={clsx(classes.margin, classes.textField)}>
                 <Input

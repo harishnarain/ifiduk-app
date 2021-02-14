@@ -21,6 +21,7 @@ import EnhancedTableToolbar from '../../components/Subscriptions/EnhancedTableTo
 import DeleteSubscription from '../../components/Subscriptions/DeleteSubscription';
 import { fetchSubscriptions, deleteSubscription } from '../../axios';
 import authScopes from '../../shared/auth/authScopes';
+import Spinner from '../../components/UI/Spinner';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -57,6 +58,7 @@ const Subscriptions = () => {
   const [query, setQuery] = useState('');
   const [deleteSubDialog, setDeleteSubDialog] = useState(null);
   const [subscriptions, setSubscriptions] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   const debouncedQuery = useDebounce(query, 500);
 
@@ -83,6 +85,7 @@ const Subscriptions = () => {
           console.log(res);
           fetchSubscriptions(debouncedQuery, res.accessToken).then((data) => {
             setSubscriptions(data);
+            setLoading(false);
           });
         })
         .catch(() => useMsal.acquireTokenRedirect(request));
@@ -90,6 +93,7 @@ const Subscriptions = () => {
   }, [debouncedQuery]);
 
   const debouncedRefreshSubs = useDebounceFunction(() => {
+    setLoading(true);
     if (accounts.length > 0) {
       const userName = accounts[0].username;
       const currentAccount = instance.getAccountByUsername(userName);
@@ -110,6 +114,7 @@ const Subscriptions = () => {
           console.log(res);
           fetchSubscriptions('', res.accessToken).then((data) => {
             setSubscriptions(data);
+            setLoading(false);
           });
         })
         .catch(() => useMsal.acquireTokenRedirect(request));
@@ -277,7 +282,8 @@ const Subscriptions = () => {
               onRequestSort={requestSortHandler}
               rowCount={subscriptions.length}
             />
-            {subs}
+            {/* {subs} */}
+            {loading ? <Spinner /> : subs}
           </Table>
         </TableContainer>
         <TablePagination

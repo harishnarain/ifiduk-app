@@ -32,12 +32,13 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const CreateSubscription = () => {
+const CreateSubscription = ({ history }) => {
   const classes = useStyles();
   const { instance, accounts } = useMsal();
   const { productId } = useParams();
   const [tenantName, setTenantName] = useState('');
   const loginScopes = { ...authScopes };
+  const [loading, setLoading] = useState(false);
 
   if (accounts.length > 0) {
     const userName = accounts[0].username;
@@ -67,6 +68,7 @@ const CreateSubscription = () => {
 
   const onSubmitHandler = (event) => {
     event.preventDefault();
+    setLoading(true);
     const requestBody = {
       productId,
       name: tenantName,
@@ -92,6 +94,10 @@ const CreateSubscription = () => {
           console.log(res);
           createSubscription(requestBody, res.accessToken);
         })
+        .then(() => {
+          history.push('/admin/subscriptions');
+          setLoading(false);
+        })
         .catch(() => useMsal.acquireTokenRedirect(request));
     }
   };
@@ -104,6 +110,7 @@ const CreateSubscription = () => {
         loadingComponent={Spinner}
         authenticationRequest={loginScopes}
       >
+      {loading ? <Spinner /> : (
       <form className={classes.root} autoComplete="off" onSubmit={(event) => onSubmitHandler(event)}>
         <Container>
           <Grid
@@ -129,6 +136,7 @@ const CreateSubscription = () => {
           </Grid>
         </Container>
       </form>
+    )}
       </MsalAuthenticationTemplate>
     </Aux>
   );

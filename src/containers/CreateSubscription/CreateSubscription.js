@@ -1,11 +1,14 @@
 import React, { useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useLocation } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import FormControl from '@material-ui/core/FormControl';
 import Input from '@material-ui/core/Input';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import clsx from 'clsx';
 import Container from '@material-ui/core/Container';
+import Box from '@material-ui/core/Box';
+import Paper from '@material-ui/core/Paper';
+import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import { useMsal, MsalAuthenticationTemplate } from '@azure/msal-react';
@@ -15,6 +18,7 @@ import { createSubscription } from '../../axios/index';
 import authScopes from '../../shared/auth/authScopes';
 import Spinner from '../../components/UI/Spinner';
 import Aux from '../../hoc/Auxilary/Auxilary';
+import { checkValidity } from '../../shared/utility';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -27,18 +31,40 @@ const useStyles = makeStyles((theme) => ({
   textField: {
     width: '35ch',
   },
+  container: {
+    width: '100%',
+    padding: theme.spacing(4),
+  },
+  box: {
+    display: 'flex',
+    justifyContent: 'center',
+  },
+  paper: {
+    width: '85vw',
+    padding: theme.spacing(3),
+  },
   formGrid: {
     minHeight: '100vh',
   },
 }));
 
+const useQuery = () => new URLSearchParams(useLocation().search);
+
 const CreateSubscription = ({ history }) => {
   const classes = useStyles();
   const { instance, accounts } = useMsal();
   const { productId } = useParams();
+  const query = useQuery();
   const [tenantName, setTenantName] = useState('');
   const loginScopes = { ...authScopes };
   const [loading, setLoading] = useState(false);
+  const [nameStatus, setNameStatus] = useState(false);
+
+  const tenantNameRules = {
+    isTenantName: true,
+  };
+
+  const title = query.get('name');
 
   if (accounts.length > 0) {
     const userName = accounts[0].username;
@@ -62,6 +88,7 @@ const CreateSubscription = ({ history }) => {
 
   const tenantNameInputHandler = (value) => {
     setTenantName(value);
+    setNameStatus(checkValidity(tenantName, tenantNameRules));
   };
 
   const onSubmitHandler = (event) => {
@@ -109,7 +136,12 @@ const CreateSubscription = ({ history }) => {
       >
       {loading ? <Spinner /> : (
       <form className={classes.root} autoComplete="off" onSubmit={(event) => onSubmitHandler(event)}>
-        <Container>
+        <Container className={classes.container}>
+          <Box className={classes.box}>
+            <Paper className={classes.paper}>
+              <Typography variant="h6" gutterBottom>
+                {`Choose a domain name for ${title}`}
+              </Typography>
           <Grid
             container
             spacing={0}
@@ -126,11 +158,13 @@ const CreateSubscription = ({ history }) => {
               </FormControl>
             </Grid>
             <Grid item xs={3}>
-              <Button variant="contained" color="primary" type="submit">
+              <Button variant="contained" color="primary" type="submit" disabled={!nameStatus}>
                 Deploy
               </Button>
             </Grid>
           </Grid>
+            </Paper>
+          </Box>
         </Container>
       </form>
     )}

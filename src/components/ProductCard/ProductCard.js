@@ -30,7 +30,7 @@ const ProductCard = ({ id, title, description }) => {
         </Typography>
       </CardContent>
       <CardActions>
-        <Button size="small" color="primary" href={`/admin/subscriptions/${id}`}>
+        <Button size="small" color="primary" href={`/admin/subscriptions/${id}?name=${title}`}>
           Deploy
         </Button>
       </CardActions>

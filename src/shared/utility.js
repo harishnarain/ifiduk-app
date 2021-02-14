@@ -31,5 +31,10 @@ export const checkValidity = (value, rules) => {
     isValid = pattern.test(value) && isValid;
   }
 
+  if (rules.isTenantName) {
+    const pattern = /^([a-z][a-z0-9]*(?:-[a-z0-9]+)*){5,15}$/;
+    isValid = pattern.test(value) && isValid;
+  }
+
   return isValid;
 };

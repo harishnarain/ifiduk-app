@@ -282,7 +282,6 @@ const Subscriptions = () => {
               onRequestSort={requestSortHandler}
               rowCount={subscriptions.length}
             />
-            {/* {subs} */}
             {loading ? <Spinner /> : subs}
           </Table>
         </TableContainer>

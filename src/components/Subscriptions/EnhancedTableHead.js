@@ -11,12 +11,14 @@ const headCells = [
   {
     id: 'name',
     numeric: false,
+    align: 'left',
     disablePadding: true,
     label: 'Name',
   },
   {
     id: 'status',
     numeric: false,
+    align: 'center',
     disablePadding: true,
     label: 'Status',
   },
@@ -42,7 +44,7 @@ const EnhancedTableHead = (props) => {
         {headCells.map((headCell) => (
           <TableCell
             key={headCell.id}
-            align={headCell.numeric ? 'right' : 'left'}
+            align={headCell.align}
             padding={headCell.disablePadding ? 'none' : 'default'}
             sortDirection={orderBy === headCell.id ? order : false}>
             <TableSortLabel

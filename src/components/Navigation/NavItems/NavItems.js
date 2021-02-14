@@ -65,7 +65,10 @@ const NavItems = () => {
   const loginScopes = {
     scopes: ['https://ifiduk.onmicrosoft.com/c1020dea-88d6-4406-9551-c091e83f0e47/Data.Read'],
   };
-  const [userProfile, setUserProfile] = useState({});
+  const [userProfile, setUserProfile] = useState({
+    name: '',
+    email: '',
+  });
 
   useEffect(() => {
     if (accounts.length > 0) {

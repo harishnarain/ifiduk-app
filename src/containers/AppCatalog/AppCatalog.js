@@ -9,6 +9,7 @@ import Paper from '@material-ui/core/Paper';
 import ProductCard from '../../components/ProductCard/ProductCard';
 import { fetchProducts } from '../../axios';
 import useDebounce from '../../shared/useDebounce';
+import Spinner from '../../components/UI/Spinner';
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -33,12 +34,14 @@ const AppCatalog = () => {
   const [products, setProducts] = useState([]);
   const [query, setQuery] = useState('');
   const classes = useStyles();
+  const [loading, setLoading] = useState(true);
 
   const debouncedQuery = useDebounce(query, 500);
 
   useEffect(() => {
     fetchProducts(debouncedQuery).then((data) => {
       setProducts(data);
+      setLoading(false);
     });
   }, [debouncedQuery]);
 
@@ -62,7 +65,7 @@ const AppCatalog = () => {
             onChange={(event) => setQuery(event.target.value)}
           />
           <Grid container spacing={3}>
-            {productCards}
+            {loading ? <Spinner /> : productCards}
           </Grid>
         </Paper>
       </Box>

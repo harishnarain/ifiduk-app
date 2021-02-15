@@ -6,6 +6,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import SubscriptionsIcon from '@material-ui/icons/Subscriptions';
 import ShopIcon from '@material-ui/icons/Shop';
 import DashboardIcon from '@material-ui/icons/Dashboard';
+import AppsIcon from '@material-ui/icons/Apps';
 
 const SideDrawerItems = () => (
   <div>
@@ -26,6 +27,12 @@ const SideDrawerItems = () => (
         <ShopIcon />
       </ListItemIcon>
       <ListItemText primary="App Catalog" />
+    </ListItem>
+    <ListItem button component={Link} to="/admin/products/add">
+      <ListItemIcon>
+        <AppsIcon />
+      </ListItemIcon>
+      <ListItemText primary="Add Product" />
     </ListItem>
   </div>
 );

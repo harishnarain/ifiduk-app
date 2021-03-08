@@ -8,11 +8,17 @@ import Typography from '@material-ui/core/Typography';
 
 const useStyles = makeStyles({
   root: {
+    position: 'relative',
     maxWidth: 345,
+    height: 190,
     backgroundColor: '#495057',
   },
   media: {
     height: 140,
+  },
+  cardActions: {
+    position: 'absolute',
+    bottom: 5,
   },
 });
 
@@ -29,7 +35,7 @@ const ProductCard = ({ id, title, description }) => {
           {description}
         </Typography>
       </CardContent>
-      <CardActions>
+      <CardActions className={classes.cardActions}>
         <Button size="small" color="primary" href={`/admin/subscriptions/${id}?name=${title}`}>
           Deploy
         </Button>

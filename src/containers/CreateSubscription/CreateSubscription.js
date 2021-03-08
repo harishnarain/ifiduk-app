@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams, useLocation } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import FormControl from '@material-ui/core/FormControl';
@@ -14,11 +14,12 @@ import Button from '@material-ui/core/Button';
 import { useMsal, MsalAuthenticationTemplate } from '@azure/msal-react';
 import { InteractionType } from '@azure/msal-browser';
 
-import { createSubscription } from '../../axios/index';
+import { createSubscription, fetchSubscriptions } from '../../axios/index';
 import authScopes from '../../shared/auth/authScopes';
 import Spinner from '../../components/UI/Spinner';
 import Aux from '../../hoc/Auxilary/Auxilary';
 import { checkValidity } from '../../shared/utility';
+import useDebounce from '../../shared/useDebounce';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -59,6 +60,38 @@ const CreateSubscription = ({ history }) => {
   const loginScopes = { ...authScopes };
   const [loading, setLoading] = useState(false);
   const [nameStatus, setNameStatus] = useState(false);
+  const [nameAvailable, setNameAvailable] = useState(false);
+  const [nameQuery, setNameQuery] = useState('');
+
+  const debouncedNameQuery = useDebounce(nameQuery, 500);
+
+  useEffect(() => {
+    if (accounts.length > 0) {
+      const userName = accounts[0].username;
+      const currentAccount = instance.getAccountByUsername(userName);
+      const silentRequest = {
+        ...loginScopes,
+        account: currentAccount,
+        forceRefresh: false,
+      };
+
+      const request = {
+        ...loginScopes,
+        loginHint: currentAccount.username,
+      };
+
+      instance
+        .acquireTokenSilent(silentRequest)
+        .then((res) => {
+          fetchSubscriptions(debouncedNameQuery, res.accessToken).then((data) => {
+            // eslint-disable-next-line max-len
+            const subscriptionExists = data.some((subscription) => subscription.name === debouncedNameQuery);
+            setNameAvailable(!subscriptionExists);
+          });
+        })
+        .catch(() => useMsal.acquireTokenRedirect(request));
+    }
+  }, [debouncedNameQuery]);
 
   const tenantNameRules = {
     isTenantName: true,
@@ -86,9 +119,14 @@ const CreateSubscription = ({ history }) => {
       .catch(() => useMsal.acquireTokenRedirect(request));
   }
 
+  const checkTenantNameAvailability = (value) => {
+    setNameQuery(value);
+  };
+
   const tenantNameInputHandler = (value) => {
     setTenantName(value);
     setNameStatus(checkValidity(tenantName, tenantNameRules));
+    checkTenantNameAvailability(value);
   };
 
   const onSubmitHandler = (event) => {
@@ -159,7 +197,7 @@ const CreateSubscription = ({ history }) => {
               </FormControl>
             </Grid>
             <Grid item xs={3}>
-              <Button variant="contained" color="primary" type="submit" disabled={!nameStatus}>
+              <Button variant="contained" color="primary" type="submit" disabled={!nameStatus || !nameAvailable}>
                 Deploy
               </Button>
             </Grid>
